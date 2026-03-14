@@ -1,0 +1,92 @@
+<HTML>
+<HEAD>
+<TITLE>AI Assignment B-2</TITLE>
+<LINK REV="made" HREF="mailto:webmaster@cs.bgu.ac.il">
+<!-- Created March 2026 by Solomon Eyal Shimony (shimony@cs.bgu.ac.il) --!>
+</HEAD>
+
+<BODY>
+        <CENTER>
+        <H1>Introduction to Artificial Inteligence </H1>
+        <H3>Bonus Assignment B-2</H3>
+        </CENTER>
+<HR>
+<H2> Programming assignment - learning with artificial neural networks  </H2>
+<p>
+
+<PRE>
+
+In this assignment, you will implement neural networks and training neural
+networks with a random-restart backpropagation algorithm.
+The program will include two modules:
+the neural network itself, and the training module, that modifies the
+network weights so as to achieve optimal peformance on a given function.
+<P>
+
+The neural network structure is feed-forward,  specified by the number of
+units per layer. Assume that the output of each unit at level k is connected
+to the input of all units at level k+1. Specification will be by an ASCII
+file, where the first line will contain just the number of layers, and
+following lines will contain (one per line) the number of units at layer 1
+(input), then layer 2, etc. For example, the following specifies
+a network with 3 input units, 1 intermediate (hidden) unit, and 2 output
+units.
+<PRE>
+3
+3
+1
+2
+</PRE>
+
+<P>
+The TASK for a neural network is an ASCII file containing a TRUTH TABLE
+for some BINARY VALUED function. Each line in the file specifies the outputs
+for each combination of input values. For example, a TASK file for the above
+network might be:
+<PRE>
+F F F   F T
+F F T   T T
+F T F   F F
+F T T   T F
+T F F   T T
+T F T   T T
+T T F   T F
+T T T   T F
+</PRE>
+
+<P>
+The program that trains the network uses 10 random initial weight assignments,
+and for each initial weight assignment runs backpropagation training,
+where the stopping criterion is: near - 0 error
+over the entire set of examples,
+or 5 introductions of the entire example set with no decrease in the
+number of errors. Note that if the former occurs, there is no
+need for further re-starts! 
+For full credit, you must implement the backpropagation yourself, and not use any
+such package.
+Use a training parameter alpha = 0.3, and initial
+weights (and thresholds) uniformly generated in the range [0,1]. Use
+<b>sigmoid</b> as the activation function (1/(1+exp(-x))). In computing
+score for a network, a total (sum of absolute values)
+error less than 0.1 can be considered 0 (it will never be <b>really</b>
+0 for finite weights!
+
+<p>
+Deliverables:
+<OL>
+<LI> Your program.
+<LI> Report on a set of experiments - number of errors as a function of
+number of training sessions, on a non-trivial learning example.
+</OL>
+
+<P>
+Deadline: undefined.
+<P>
+Note: this is a <b>optional, bonus</b> assignment.
+Solo ubmission or instead of midterm 2 quiz in case
+of absence due to army service.
+
+</PRE>
+
+</BODY>
+</HTML>

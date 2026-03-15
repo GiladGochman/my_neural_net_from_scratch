@@ -41,7 +41,7 @@ def run():
 
     # loop 10 times to try different random initializations of weights and thresholds
     final_success = False
-    for attempt in range(1, 2): # change to 11 for final version
+    for attempt in range(1, 11): # change to 11 for final version
         print(f"Attempt #{attempt}: Initializing random weights/thresholds...")
         
         # initialize the neural network with random weights and thresholds

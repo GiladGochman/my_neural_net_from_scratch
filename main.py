@@ -1,4 +1,4 @@
-import predict
+import NeuralNetwork
 import train
 import os
 
@@ -41,11 +41,11 @@ def run():
 
     # loop 10 times to try different random initializations of weights and thresholds
     final_success = False
-    for attempt in range(1, 111):
+    for attempt in range(1, 2): # change to 11 for final version
         print(f"Attempt #{attempt}: Initializing random weights/thresholds...")
         
         # initialize the neural network with random weights and thresholds
-        nn = predict.NeuralNetwork(layer_sizes)
+        nn = NeuralNetwork.NeuralNetwork(layer_sizes)
         
         isSuccess, error_history = train.train_network(nn, training_data, alpha=0.3)
         

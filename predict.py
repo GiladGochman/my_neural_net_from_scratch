@@ -47,8 +47,8 @@ def parse(val):
     raise ValueError(f"Invalid input '{val}', use T or F")
 
 if len(sys.argv) < 3:
-    print("Usage: python script.py <input1> <input2> ...")
-    print("Example: python script.py T F T")
+    print("Usage: python predict.py <input1> <input2> ...")
+    print("Example: python predict.py T F T")
     sys.exit(1)
 
 weights, thresholds = load_model("model.txt")

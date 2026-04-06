@@ -1,6 +1,7 @@
 import NeuralNetwork
 import train
 import os
+import matplotlib.pyplot as plt
 
 def parse_config(filename):
     """parsing the dimentions of the neural net from the file network_config.txt"""
@@ -55,10 +56,23 @@ def run():
             final_success = True
             
             print("\nFinal Truth Table Results:")
+            # using all the inputs to show the final predictions after training:
             for inputs, targets in training_data:
                 prediction = nn.get_output(inputs)
+                # rounding results to 3 places after decimal point:
                 clean_pred = [round(p, 3) for p in prediction]
                 print(f"In: {inputs} | Target: {targets} | Predicted: {clean_pred}")
+            
+            # Plot error history for the report
+            plt.figure(figsize=(10, 6))
+            plt.plot(range(1, len(error_history) + 1), error_history, marker='o', linestyle='-')
+            plt.title(f'Error vs. Training Sessions (Attempt {attempt})')
+            plt.xlabel('Training Sessions (Epochs)')
+            plt.ylabel('Total Absolute Error')
+            plt.grid(True)
+            plt.savefig(f'error_plot_attempt_{attempt}.png')
+            plt.show()
+            
             break
         else:
             print(f"Attempt {attempt} failed (Stuck in local optimum). Restarting...")

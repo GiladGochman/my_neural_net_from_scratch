@@ -31,3 +31,11 @@ T T T T F
 3. run:
 
 python main.py
+
+4. after running and diverging successfully:
+
+you may run predict.py to perdict a single line of inputs..
+
+    Usage: python predict.py <input1> <input2> ...
+
+    Example: python predict.py T F T

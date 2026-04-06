@@ -73,7 +73,7 @@ def train_network(nn, dataset, alpha=0.3):
         error_history.append(current_epoch_errors)
 
         if total_abs_error < 0.1:
-            save_model(nn, "model.txt")   # ← save on convergence
+            save_model(nn, "model.txt")   # save on convergence
             return True, error_history
 
         if current_epoch_errors < best_error_count:

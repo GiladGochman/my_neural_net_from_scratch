@@ -10,7 +10,7 @@ class NeuralNetwork:
         self.num_layers = len(layer_sizes)
         
         # initialiaze random weights in range [0,1]
-        self.weights = [] #vector of matrices, each matrix is the weights between layer i and i+1
+        self.weights = [] # weights is a list of matrices, each matrix is the weights between layer i and i+1
         for i in range(self.num_layers - 1):
             cols = self.layer_sizes[i]   # cols = row length = size of current layer
             rows = self.layer_sizes[i+1] # rows = column length = size of next layer

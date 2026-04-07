@@ -17,30 +17,34 @@ def train_network(nn, dataset, alpha=0.3):
         # Initialize accumulators for this epoch
         weight_updates = [[[0.0 for i in range(len(layer[j]))] for j in range(len(layer))] for layer in nn.weights]
         threshold_updates = [[0.0 for j in range(len(layer))] for layer in nn.thresholds]
-        print(f"Epoch {epoch} Starting...")  # Debugging statement
-        # print(f" Weights: {nn.weights}")
-        # print(f" Thresholds: {nn.thresholds}")
+        print(f"Epoch {epoch} Starting.") 
+
 
         for inputs, targets in dataset:
             activations = nn.forward(inputs)
             output = activations[-1]
 
             row_error = sum(abs(t - o) for t, o in zip(targets, output))
+            # zip is used to turn the two vectors into one iterable vector of pairs.
             total_abs_error += row_error
-
+            # Initialize an array of lists. the array is indexed by layer, and each list will hold the deltas for that layer's neurons.
             deltas = [[] for _ in range(nn.num_layers)]
 
-            output_layer_idx = nn.num_layers - 1
-            for i in range(nn.layer_sizes[output_layer_idx]):
+            output_layer_index = nn.num_layers - 1
+            # Iterate over the neurons in the output layer to calculate deltas:
+            for i in range(nn.layer_sizes[output_layer_index]):
                 o = output[i]
                 t = targets[i]
                 delta = (t - o) * o * (1 - o)
                 # print(f"Output Neuron {i}: Target = {t:.4f}, Output = {o:.4f}, Delta = {delta:.4f}")
-                deltas[output_layer_idx].append(delta)
-
-            for l in range(output_layer_idx - 1, 0, -1):
+                deltas[output_layer_index].append(delta)
+            # Backpropagate the error to calculate deltas for hidden layers:
+            for l in range(output_layer_index - 1, 0, -1):
+            # l is the layer index, starting from last hidden layer, going down to the first hidden layer (index 1, since index 0 is input layer)   
                 for i in range(nn.layer_sizes[l]):
+                # i is the neuron index
                     error_sum = 0
+                    # Iterate the next layer's neurons:
                     for j in range(nn.layer_sizes[l + 1]):
                         error_sum += deltas[l + 1][j] * nn.weights[l][j][i]
                     val = activations[l][i]
@@ -48,21 +52,16 @@ def train_network(nn, dataset, alpha=0.3):
                     deltas[l].append(delta)
                     # print(f"Hidden Layer {l} Neuron {i}: Activation = {val:.4f}, Delta = {delta:.4f}")
 
+            # In each example (row of inputs and outputs), we add once for each weight accumulator and once for each neuron's threshold accumulator.
             for l in range(len(nn.weights)):
                 for j in range(len(nn.weights[l])):
                     for i in range(len(nn.weights[l][j])):
                         weight_updates[l][j][i] += alpha * deltas[l + 1][j] * activations[l][i]
                     threshold_updates[l][j] -= alpha * deltas[l + 1][j]
-                    # print(f"Layer {l} Neuron {j}: Weight Updates = {weight_updates[l][j]}, Threshold Update = {threshold_updates[l][j]:.4f}")
 
         current_epoch_errors = total_abs_error
-        # print("=== FINAL ACCUMULATED UPDATES ===")
-        # for l in range(len(threshold_updates)):
-        #     for j in range(len(threshold_updates[l])):
-                # print(f"Layer {l} Neuron {j}: Final Threshold Update = {threshold_updates[l][j]:.6f}")
 
-        # print(f"Epoch {epoch}: Total Abs Error = {total_abs_error:.4f}, Error Count = {current_epoch_errors}")
-
+        # Once every epoch, update the weights and thresholds using the accumulated values:
         for l in range(len(nn.weights)):
             for j in range(len(nn.weights[l])):
                 for i in range(len(nn.weights[l][j])):

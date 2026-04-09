@@ -49,15 +49,11 @@ class NeuralNetwork:
                 
                 # subtract the threshold for this neuron:
                 z = net_input - self.thresholds[i][j]
-                # print(f"Layer {i+1} Neuron {j}: Net input = {net_input:.4f}, Threshold = {self.thresholds[i][j]:.4f}, Z = {z:.4f}"  )
                 # use activevation function
                 next_layer_values.append(self.sigmoid(z))
             
             current_layer_values = next_layer_values
             activations.append(current_layer_values)
-        #print inputs and outputs for debugging:
-        # print(f"input:", input_vector)
-        # print(f"output:", current_layer_values)
         return activations
 
 # the get_output function is called to show only the output (last vector of activations) for user friendlyness
